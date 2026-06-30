@@ -1,4 +1,5 @@
 generated-docs/
+.roc-random-tmp/
 *.ll
 
 # Compiled executables

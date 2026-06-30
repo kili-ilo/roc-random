@@ -1,30 +1,54 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-# https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
-set -euxo pipefail
+root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$root_dir"
 
-if [ -z "${ROC:-}" ]; then
-  echo "INFO: The ROC environment variable is not set."
-  export ROC=$(which roc)
+ROC_BIN="${ROC:-roc}"
+
+if [ -n "${ROC_RANDOM_TMPDIR:-}" ]; then
+    tmp_base="$ROC_RANDOM_TMPDIR"
+else
+    tmp_base="$root_dir/.roc-random-tmp"
 fi
+export ROC_RANDOM_TMPDIR="$tmp_base"
+export ROC="$ROC_BIN"
 
-EXAMPLES_DIR='./examples'
-PACKAGE_DIR='./package'
+tmp_dir="$tmp_base/roc-random-ci"
+docs_dir="$tmp_dir/docs"
 
-# List of files to ignore
-IGNORED_FILES=("xx.roc")
+rm -rf "$tmp_dir"
+mkdir -p "$docs_dir"
 
-# roc check examples
-for ROC_FILE in $EXAMPLES_DIR/*.roc; do
-    if [[ " ${IGNORED_FILES[*]} " != *" ${ROC_FILE##*/} "* ]]; then
-        $ROC check $ROC_FILE
-    fi
+echo "$("$ROC_BIN" version)"
+
+echo ""
+echo "Checking format..."
+"$ROC_BIN" fmt --check package examples
+
+echo ""
+echo "Checking package..."
+"$ROC_BIN" check package/main.roc
+
+echo ""
+echo "Checking examples..."
+for roc_file in examples/*.roc; do
+    "$ROC_BIN" check "$roc_file"
 done
 
-# roc test package
-$ROC test $PACKAGE_DIR/main.roc
+echo ""
+echo "Running package tests..."
+"$ROC_BIN" test package/main.roc
 
-# test building docs website
-$ROC docs $PACKAGE_DIR/main.roc
+echo ""
+echo "Running example tests..."
+for roc_file in examples/*.roc; do
+    "$ROC_BIN" test "$roc_file"
+done
 
-echo "INFO: Completed all tests... 🎉"
+echo ""
+echo "Generating package docs..."
+"$ROC_BIN" docs package/main.roc --output="$docs_dir"
+
+echo ""
+echo "Completed all tests."

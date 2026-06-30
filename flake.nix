@@ -33,10 +33,7 @@
               pkgs.actionlint
               pkgs.nixfmt-rfc-style
               pkgs.nodePackages.prettier
-              pkgs.pre-commit
-              pkgs.python312Packages.pre-commit-hooks
             ];
-            shellHook = "pre-commit install --overwrite";
           };
           formatter = pkgs.nixfmt-rfc-style;
         };

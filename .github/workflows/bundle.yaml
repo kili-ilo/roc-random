@@ -16,9 +16,9 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
       - name: Install Roc
-        uses: hasnep/setup-roc@v0.5.0
+        uses: roc-lang/setup-roc@bd311e2fb815a3d2255f7ee14a922f0b736e020b
         with:
-          roc-version: nightly
+          version: nightly-new-compiler
       - name: Bundle and release the library
         uses: hasnep/bundle-roc-library@v0.1.0
         with:
