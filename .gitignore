@@ -1,6 +1,7 @@
 generated-docs/
 .roc-random-tmp/
 *.ll
+__pycache__/
 
 # Compiled executables
 examples/color

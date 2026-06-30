@@ -16,9 +16,10 @@ export ROC="$ROC_BIN"
 
 tmp_dir="$tmp_base/roc-random-ci"
 docs_dir="$tmp_dir/docs"
+bundle_dir="$tmp_dir/bundle"
 
 rm -rf "$tmp_dir"
-mkdir -p "$docs_dir"
+mkdir -p "$docs_dir" "$bundle_dir"
 
 echo "$("$ROC_BIN" version)"
 
@@ -49,6 +50,22 @@ done
 echo ""
 echo "Generating package docs..."
 "$ROC_BIN" docs package/main.roc --output="$docs_dir"
+
+case "$(uname -s)" in
+    MINGW* | MSYS* | CYGWIN*)
+        echo ""
+        echo "Skipping package bundling on Windows."
+        exit 0
+        ;;
+esac
+
+echo ""
+echo "Bundling package..."
+scripts/bundle.sh --output-dir "$bundle_dir"
+
+echo ""
+echo "Testing examples against localhost bundle..."
+python3 ci/test_bundle_examples.py
 
 echo ""
 echo "Completed all tests."
