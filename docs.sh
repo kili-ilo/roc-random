@@ -23,11 +23,6 @@ VERSION=$1
 # Validate version number
 validate_version "$VERSION"
 
-# Run roc docs with validated version
-roc docs --root-dir "/roc-random/$VERSION/" package/main.roc
-
-# Create new version directory in www/
-mkdir www/$VERSION
-
-# Move generated docs to version directory
-mv generated-docs/* www/$VERSION
+# Generate docs for this version into www/
+rm -rf "www/$VERSION"
+roc docs package/main.roc --output="www/$VERSION"

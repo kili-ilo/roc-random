@@ -55,7 +55,7 @@ Stdout.line!(Str.join_with(numbers.map(U32.to_str), "\n"))
 
 ## Documentation
 
-See [the library documentation site](https://jancvanb.github.io/roc-random/0.5.0/Random/)
+See [the library documentation site](https://kili-ilo.github.io/roc-random/0.6.0/)
 for more info about its API.
 
 ## Goals

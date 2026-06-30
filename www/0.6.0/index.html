@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Random Docs</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <script src="search.js" defer></script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <symbol id="link-icon" viewBox="0 0 640 512">
+      <path d="M562.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L405.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C189.5 251.2 196 330 246 380c56.5 56.5 148 56.5 204.5 0L562.8 267.7zM43.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C57 372 57 321 88.5 289.5L200.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C416.5 260.8 410 182 360 132c-56.5-56.5-148-56.5-204.5 0L43.2 244.3z"/>
+    </symbol>
+  </defs>
+</svg>
+    <nav id="sidebar-nav">
+        <div class="pkg-and-logo">
+            <a class="logo" href="."><svg viewBox="0 -6 51 58" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="logo-link">
+    <title id="logo-link">Home</title>
+    <polygon role="presentation" points="0,0 23.8834,3.21052 37.2438,19.0101 45.9665,16.6324 50.5,22 45,22 44.0315,26.3689 26.4673,39.3424 27.4527,45.2132 17.655,53 23.6751,22.7086" />
+</svg></a>
+            <h1 class="pkg-full-name"><a href="">package</a></h1>
+        </div>
+        <div class="module-links-container">
+            <ul class="module-links">
+                <li class="sidebar-entry">
+                    <a class="sidebar-module-link active" data-module-name="Random" href="."><button class="entry-toggle"></button><span>Random</span></a>
+                    <ul class="sidebar-sub-entries">
+                        <li><a class="sidebar-value" href="#Random.seed">seed</a></li>
+                        <li><a class="sidebar-value" href="#Random.seed_variant">seed_variant</a></li>
+                        <li><a class="sidebar-value" href="#Random.step">step</a></li>
+                        <li><a class="sidebar-value" href="#Random.next">next</a></li>
+                        <li><a class="sidebar-value" href="#Random.static">static</a></li>
+                        <li><a class="sidebar-value" href="#Random.map">map</a></li>
+                        <li><a class="sidebar-value" href="#Random.map2">map2</a></li>
+                        <li><a class="sidebar-value" href="#Random.chain">chain</a></li>
+                        <li><a class="sidebar-value" href="#Random.list">list</a></li>
+                        <li><a class="sidebar-value" href="#Random.u8">u8</a></li>
+                        <li><a class="sidebar-value" href="#Random.bounded_u8">bounded_u8</a></li>
+                        <li><a class="sidebar-value" href="#Random.i8">i8</a></li>
+                        <li><a class="sidebar-value" href="#Random.bounded_i8">bounded_i8</a></li>
+                        <li><a class="sidebar-value" href="#Random.u16">u16</a></li>
+                        <li><a class="sidebar-value" href="#Random.bounded_u16">bounded_u16</a></li>
+                        <li><a class="sidebar-value" href="#Random.i16">i16</a></li>
+                        <li><a class="sidebar-value" href="#Random.bounded_i16">bounded_i16</a></li>
+                        <li><a class="sidebar-value" href="#Random.u32">u32</a></li>
+                        <li><a class="sidebar-value" href="#Random.bounded_u32">bounded_u32</a></li>
+                        <li><a class="sidebar-value" href="#Random.i32">i32</a></li>
+                        <li><a class="sidebar-value" href="#Random.bounded_i32">bounded_i32</a></li>
+                        <li class="sidebar-type">
+                          <a class="sidebar-type-name" href="#Random.Generator">Generator</a>
+                        </li>
+                        <li class="sidebar-type">
+                          <a class="sidebar-type-name" href="#Random.Generation">Generation</a>
+                        </li>
+                        <li class="sidebar-type">
+                          <a class="sidebar-type-name" href="#Random.State">State</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <form id="module-search-form">
+            <input type="search" id="module-search" placeholder="Search Documentation" autocomplete="off" />
+            <input type="search" id="module-search-nojs" placeholder="Enable JavaScript to search" autocomplete="off" disabled aria-label="Search requires JavaScript" />
+            <noscript><style>#module-search{display:none}#module-search-nojs{display:block}</style></noscript>
+            <button class="menu-toggle" type="button" aria-label="Toggle sidebar"><svg viewBox="0 6 18 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 6h18v2H0V6zm0 5h18v2H0v-2zm0 5h18v2H0v-2z"/>
+</svg></button>
+            <ul id="search-type-ahead" class="hidden">
+            <li class="hidden"><a class="type-ahead-link" href="#Random.seed"><span class="type-ahead-def-name">seed</span> <span class="type-ahead-signature">: <span class="type">U32</span><span class="sig-arrow"> -&gt; </span><span class="type">State</span></span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.seed_variant"><span class="type-ahead-def-name">seed_variant</span> <span class="type-ahead-signature">: <span class="type">U32</span>, <span class="type">U32</span><span class="sig-arrow"> -&gt; </span><span class="type">State</span></span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.step"><span class="type-ahead-def-name">step</span> <span class="type-ahead-signature">: <span class="type">State</span>, <span class="type">Generator</span>(<span class="type-var">value</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generation</span>(<span class="type-var">value</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.next"><span class="type-ahead-def-name">next</span> <span class="type-ahead-signature">: <span class="type">Generation</span>(_), <span class="type">Generator</span>(<span class="type-var">value</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generation</span>(<span class="type-var">value</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.static"><span class="type-ahead-def-name">static</span> <span class="type-ahead-signature">: <span class="type-var">value</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type-var">value</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.map"><span class="type-ahead-def-name">map</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type-var">a</span>), (<span class="type-var">a</span><span class="sig-arrow"> -&gt; </span><span class="type-var">b</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type-var">b</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.map2"><span class="type-ahead-def-name">map2</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type-var">a</span>), <span class="type">Generator</span>(<span class="type-var">b</span>), (<span class="type-var">a</span>, <span class="type-var">b</span><span class="sig-arrow"> -&gt; </span><span class="type-var">c</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type-var">c</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.chain"><span class="type-ahead-def-name">chain</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type-var">a</span>), <span class="type">Generator</span>(<span class="type-var">b</span>), (<span class="type-var">a</span>, <span class="type-var">b</span><span class="sig-arrow"> -&gt; </span><span class="type-var">c</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type-var">c</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.list"><span class="type-ahead-def-name">list</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type-var">a</span>), <span class="type">U64</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type">List</span>(<span class="type-var">a</span>))</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.u8"><span class="type-ahead-def-name">u8</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type">U8</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.bounded_u8"><span class="type-ahead-def-name">bounded_u8</span> <span class="type-ahead-signature">: <span class="type">U8</span>, <span class="type">U8</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type">U8</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.i8"><span class="type-ahead-def-name">i8</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type">I8</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.bounded_i8"><span class="type-ahead-def-name">bounded_i8</span> <span class="type-ahead-signature">: <span class="type">I8</span>, <span class="type">I8</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type">I8</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.u16"><span class="type-ahead-def-name">u16</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type">U16</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.bounded_u16"><span class="type-ahead-def-name">bounded_u16</span> <span class="type-ahead-signature">: <span class="type">U16</span>, <span class="type">U16</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type">U16</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.i16"><span class="type-ahead-def-name">i16</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type">I16</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.bounded_i16"><span class="type-ahead-def-name">bounded_i16</span> <span class="type-ahead-signature">: <span class="type">I16</span>, <span class="type">I16</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type">I16</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.u32"><span class="type-ahead-def-name">u32</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type">U32</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.bounded_u32"><span class="type-ahead-def-name">bounded_u32</span> <span class="type-ahead-signature">: <span class="type">U32</span>, <span class="type">U32</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type">U32</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.i32"><span class="type-ahead-def-name">i32</span> <span class="type-ahead-signature">: <span class="type">Generator</span>(<span class="type">I32</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.bounded_i32"><span class="type-ahead-def-name">bounded_i32</span> <span class="type-ahead-signature">: <span class="type">I32</span>, <span class="type">I32</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type">I32</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.Generator"><span class="type-ahead-def-name">Generator</span> <span class="type-ahead-signature">: <span class="type">State</span><span class="sig-arrow"> -&gt; </span><span class="type">Generation</span>(<span class="type-var">value</span>)</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.Generation"><span class="type-ahead-def-name">Generation</span> <span class="type-ahead-signature">: { value : <span class="type-var">value</span>, state : <span class="type">State</span> }</span></a></li>
+            <li class="hidden"><a class="type-ahead-link" href="#Random.State"><span class="type-ahead-def-name">State</span> <span class="type-ahead-signature"></span></a></li>
+            </ul>
+        </form>
+        <div class="main-content">
+        <h1 class="module-name">Random</h1>
+        <code class="entry-type-def">:= []</code>
+        <div class="module-doc">
+                <p>PCG algorithms, constants, and wrappers</p>
+                <p>For more information about PCG see <a href="https://www.pcg-random.org">www.pcg-random.org</a></p>
+                <p>PCG is a family of simple fast space-efficient statistically good algorithms for random number generation.</p>
+        </div>
+        <article class="entry entry-value" id="Random.seed">
+            <div class="entry-signature">
+                <a href="#Random.seed" class="entry-anchor" aria-label="Permalink to seed"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.seed" class="entry-name-link"><strong>seed</strong></a> : <a href="https://roc-lang.org/builtins/main/Num#U32"><span class="type">U32</span></a><span class="sig-arrow"> -&gt; </span><span class="type">State</span></code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct an initial &quot;seed&quot; <code>State</code> for <code>Generator</code>s</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.seed_variant">
+            <div class="entry-signature">
+                <a href="#Random.seed_variant" class="entry-anchor" aria-label="Permalink to seed_variant"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.seed_variant" class="entry-name-link"><strong>seed_variant</strong></a> : <a href="https://roc-lang.org/builtins/main/Num#U32"><span class="type">U32</span></a>, <a href="https://roc-lang.org/builtins/main/Num#U32"><span class="type">U32</span></a><span class="sig-arrow"> -&gt; </span><span class="type">State</span></code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a specific &quot;variant&quot; of a &quot;seed&quot; for more advanced use.</p>
+                <p>A &quot;seed&quot; is an initial <code>State</code> for <code>Generator</code>s.</p>
+                <p>A &quot;variant&quot; is a <code>State</code> that specifies an <code>update_increment</code> constant,
+to produce a sequence of internal <code>value</code>s that shares no consecutive pairs
+with other variants of the same <code>State</code>.</p>
+                <p>Odd numbers are recommended for the update increment,
+to double the repetition period of sequences (by hitting odd values).</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.step">
+            <div class="entry-signature">
+                <a href="#Random.step" class="entry-anchor" aria-label="Permalink to step"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.step" class="entry-name-link"><strong>step</strong></a> : <span class="type">State</span>, <span class="type">Generator</span>(<span class="type-var">value</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generation</span>(<span class="type-var">value</span>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Generate a <code>Generation</code> from a state</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.next">
+            <div class="entry-signature">
+                <a href="#Random.next" class="entry-anchor" aria-label="Permalink to next"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.next" class="entry-name-link"><strong>next</strong></a> : <span class="type">Generation</span>(_), <span class="type">Generator</span>(<span class="type-var">value</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generation</span>(<span class="type-var">value</span>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Generate a new <code>Generation</code> from an old <code>Generation</code>&#39;s state</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.static">
+            <div class="entry-signature">
+                <a href="#Random.static" class="entry-anchor" aria-label="Permalink to static"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.static" class="entry-name-link"><strong>static</strong></a> : <span class="type-var">value</span><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type-var">value</span>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Create a <code>Generator</code> that always returns the same thing.</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.map">
+            <div class="entry-signature">
+                <a href="#Random.map" class="entry-anchor" aria-label="Permalink to map"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.map" class="entry-name-link"><strong>map</strong></a> : <span class="type">Generator</span>(<span class="type-var">a</span>), (<span class="type-var">a</span><span class="sig-arrow"> -&gt; </span><span class="type-var">b</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type-var">b</span>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Map over the value of a <code>Generator</code>.</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.map2">
+            <div class="entry-signature">
+                <a href="#Random.map2" class="entry-anchor" aria-label="Permalink to map2"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.map2" class="entry-name-link"><strong>map2</strong></a> : <span class="type">Generator</span>(<span class="type-var">a</span>), <span class="type">Generator</span>(<span class="type-var">b</span>), (<span class="type-var">a</span>, <span class="type-var">b</span><span class="sig-arrow"> -&gt; </span><span class="type-var">c</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type-var">c</span>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Compose two <code>Generator</code>s into a single <code>Generator</code>.</p>
+                <p>This is the applicative operation used by Roc&#39;s record-builder syntax:</p>
+                <pre><code>date_generator =
+    {
+        year: Random.bounded_i32(1, 2500),
+        month: Random.bounded_i32(1, 12),
+        day: Random.bounded_i32(1, 31),
+    }.Random</code></pre>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.chain">
+            <div class="entry-signature">
+                <a href="#Random.chain" class="entry-anchor" aria-label="Permalink to chain"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.chain" class="entry-name-link"><strong>chain</strong></a> : <span class="type">Generator</span>(<span class="type-var">a</span>), <span class="type">Generator</span>(<span class="type-var">b</span>), (<span class="type-var">a</span>, <span class="type-var">b</span><span class="sig-arrow"> -&gt; </span><span class="type-var">c</span>)<span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<span class="type-var">c</span>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Compose two <code>Generator</code>s into a single <code>Generator</code>.</p>
+                <p>This is an alias for <code>map2</code>; record-builder syntax calls <code>map2</code> directly.</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.list">
+            <div class="entry-signature">
+                <a href="#Random.list" class="entry-anchor" aria-label="Permalink to list"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.list" class="entry-name-link"><strong>list</strong></a> : <span class="type">Generator</span>(<span class="type-var">a</span>), <a href="https://roc-lang.org/builtins/main/Num#U64"><span class="type">U64</span></a><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/List"><span class="type">List</span></a>(<span class="type-var">a</span>))</code>
+            </div>
+            <div class="entry-doc">
+                <p>Generate a list of random values.</p>
+                <pre><code>generate_10_random_u8s : Generator(List(U8))
+generate_10_random_u8s =
+    Random.list(Random.u8, 10)</code></pre>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.u8">
+            <div class="entry-signature">
+                <a href="#Random.u8" class="entry-anchor" aria-label="Permalink to u8"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.u8" class="entry-name-link"><strong>u8</strong></a> : <span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#U8"><span class="type">U8</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 8-bit unsigned integers</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.bounded_u8">
+            <div class="entry-signature">
+                <a href="#Random.bounded_u8" class="entry-anchor" aria-label="Permalink to bounded_u8"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.bounded_u8" class="entry-name-link"><strong>bounded_u8</strong></a> : <a href="https://roc-lang.org/builtins/main/Num#U8"><span class="type">U8</span></a>, <a href="https://roc-lang.org/builtins/main/Num#U8"><span class="type">U8</span></a><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#U8"><span class="type">U8</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 8-bit unsigned integers between two boundaries (inclusive)</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.i8">
+            <div class="entry-signature">
+                <a href="#Random.i8" class="entry-anchor" aria-label="Permalink to i8"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.i8" class="entry-name-link"><strong>i8</strong></a> : <span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#I8"><span class="type">I8</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 8-bit signed integers</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.bounded_i8">
+            <div class="entry-signature">
+                <a href="#Random.bounded_i8" class="entry-anchor" aria-label="Permalink to bounded_i8"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.bounded_i8" class="entry-name-link"><strong>bounded_i8</strong></a> : <a href="https://roc-lang.org/builtins/main/Num#I8"><span class="type">I8</span></a>, <a href="https://roc-lang.org/builtins/main/Num#I8"><span class="type">I8</span></a><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#I8"><span class="type">I8</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 8-bit signed integers between two boundaries (inclusive)</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.u16">
+            <div class="entry-signature">
+                <a href="#Random.u16" class="entry-anchor" aria-label="Permalink to u16"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.u16" class="entry-name-link"><strong>u16</strong></a> : <span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#U16"><span class="type">U16</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 16-bit unsigned integers</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.bounded_u16">
+            <div class="entry-signature">
+                <a href="#Random.bounded_u16" class="entry-anchor" aria-label="Permalink to bounded_u16"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.bounded_u16" class="entry-name-link"><strong>bounded_u16</strong></a> : <a href="https://roc-lang.org/builtins/main/Num#U16"><span class="type">U16</span></a>, <a href="https://roc-lang.org/builtins/main/Num#U16"><span class="type">U16</span></a><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#U16"><span class="type">U16</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 16-bit unsigned integers between two boundaries (inclusive)</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.i16">
+            <div class="entry-signature">
+                <a href="#Random.i16" class="entry-anchor" aria-label="Permalink to i16"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.i16" class="entry-name-link"><strong>i16</strong></a> : <span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#I16"><span class="type">I16</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 16-bit signed integers</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.bounded_i16">
+            <div class="entry-signature">
+                <a href="#Random.bounded_i16" class="entry-anchor" aria-label="Permalink to bounded_i16"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.bounded_i16" class="entry-name-link"><strong>bounded_i16</strong></a> : <a href="https://roc-lang.org/builtins/main/Num#I16"><span class="type">I16</span></a>, <a href="https://roc-lang.org/builtins/main/Num#I16"><span class="type">I16</span></a><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#I16"><span class="type">I16</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 16-bit signed integers between two boundaries (inclusive)</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.u32">
+            <div class="entry-signature">
+                <a href="#Random.u32" class="entry-anchor" aria-label="Permalink to u32"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.u32" class="entry-name-link"><strong>u32</strong></a> : <span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#U32"><span class="type">U32</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 32-bit unsigned integers</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.bounded_u32">
+            <div class="entry-signature">
+                <a href="#Random.bounded_u32" class="entry-anchor" aria-label="Permalink to bounded_u32"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.bounded_u32" class="entry-name-link"><strong>bounded_u32</strong></a> : <a href="https://roc-lang.org/builtins/main/Num#U32"><span class="type">U32</span></a>, <a href="https://roc-lang.org/builtins/main/Num#U32"><span class="type">U32</span></a><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#U32"><span class="type">U32</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 32-bit unsigned integers between two boundaries (inclusive)</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.i32">
+            <div class="entry-signature">
+                <a href="#Random.i32" class="entry-anchor" aria-label="Permalink to i32"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.i32" class="entry-name-link"><strong>i32</strong></a> : <span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#I32"><span class="type">I32</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 32-bit signed integers</p>
+            </div>
+        </article>
+        <article class="entry entry-value" id="Random.bounded_i32">
+            <div class="entry-signature">
+                <a href="#Random.bounded_i32" class="entry-anchor" aria-label="Permalink to bounded_i32"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.bounded_i32" class="entry-name-link"><strong>bounded_i32</strong></a> : <a href="https://roc-lang.org/builtins/main/Num#I32"><span class="type">I32</span></a>, <a href="https://roc-lang.org/builtins/main/Num#I32"><span class="type">I32</span></a><span class="sig-arrow"> -&gt; </span><span class="type">Generator</span>(<a href="https://roc-lang.org/builtins/main/Num#I32"><span class="type">I32</span></a>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>Construct a <code>Generator</code> for 32-bit signed integers between two boundaries (inclusive)</p>
+            </div>
+        </article>
+        <article class="entry entry-type" id="Random.Generator">
+            <div class="entry-signature">
+                <a href="#Random.Generator" class="entry-anchor" aria-label="Permalink to Generator"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.Generator" class="entry-name-link"><strong>Generator</strong></a> : <span class="type">State</span><span class="sig-arrow"> -&gt; </span><span class="type">Generation</span>(<span class="type-var">value</span>)</code>
+            </div>
+            <div class="entry-doc">
+                <p>A generator that produces pseudorandom <code>value</code>s using the PCG algorithm.</p>
+                <pre><code>rgb_generator : Generator({ red: U8, green: U8, blue: U8 })
+rgb_generator =
+    {
+        red: Random.u8,
+        green: Random.u8,
+        blue: Random.u8,
+    }.Random</code></pre>
+            </div>
+        </article>
+        <article class="entry entry-type" id="Random.Generation">
+            <div class="entry-signature">
+                <a href="#Random.Generation" class="entry-anchor" aria-label="Permalink to Generation"><svg class="link-icon"><use href="#link-icon"/></svg></a>
+                <code class="entry-signature-code"><a href="#Random.Generation" class="entry-name-link"><strong>Generation</strong></a> : { value : <span class="type-var">value</span>, state : <span class="type">State</span> }</code>
+            </div>
+            <div class="entry-doc">
+                <p>A pseudorandom value, paired with its <code>Generator</code>&#39;s output state.</p>
+                <p>This is required to chain multiple calls together passing the updated state.</p>
+            </div>
+        </article>
+        <article class="entry entry-type" id="Random.State">
+            <h2><a href="#Random.State" class="entry-anchor" aria-label="Permalink to State"><svg class="link-icon"><use href="#link-icon"/></svg></a> <a href="#Random.State" class="entry-name-link">State</a></h2>
+            <div class="entry-doc">
+                <p>Internal state for Generators</p>
+            </div>
+        </article>
+        </div>
+        <footer><p>Made by people who like to make nice things.</p></footer>
+    </main>
+</body>
+</html>
