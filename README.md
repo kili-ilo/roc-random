@@ -25,7 +25,18 @@ Contributions & feedback are very welcome!
 
 ## Examples
 
-See the `examples/*.roc` files for various complete examples, but here is a minimal preview:
+See the `examples/*.roc` files for complete runnable examples:
+
+- `simple.roc` generates one bounded number.
+- `numbers.roc` generates a list of bounded numbers.
+- `dice.roc` rolls multiple dice and derives a total.
+- `encounter.roc` composes several generators into a record.
+- `record-builder.roc` uses Roc's record builder syntax for applicative generator composition.
+- `state-threading.roc` uses `step` and `next` to draw several values in order.
+- `variants.roc` uses `seed_variant` to make independent streams.
+- `color.roc` builds a color record from several byte generators.
+
+Here is a minimal preview:
 
 ### Print a list of 10 random numbers in the range 25-75 inclusive
 
@@ -34,14 +45,12 @@ See the `examples/*.roc` files for various complete examples, but here is a mini
 generate_a_number = Random.bounded_u32(25, 75)
 
 # Create a generator for lists of 10 numbers.
-generate_ten_numbers = generate_a_number |> Random.list(10)
+generate_ten_numbers = Random.list(generate_a_number, 10)
 
 # Initialise "randomness". (Bring Your Own source of noise.)
-Random.seed 1234
-|> Random.step(generate_ten_numbers)
-|> .value
-|> Inspect.to_str
-|> Stdout.line!
+{ value: numbers, .. } = Random.step(Random.seed(1234), generate_ten_numbers)
+
+Stdout.line!(Str.join_with(numbers.map(U32.to_str), "\n"))
 ```
 
 ## Documentation
