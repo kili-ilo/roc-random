@@ -144,171 +144,146 @@ Random := [].{
 		}
 
 	## Construct a `Generator` for 8-bit unsigned integers
+	## NOTE: We are just taking the bottom 8 bits of the generated `U32` value
+	## Some backing generators have worse statistical properties in the low-order bits
+	## and it would be wise to use the upper 8 bits instead, but according to the pcg
+	## paper (M.E. O'Neill) this backing generator has good statistical quality throughout
+	## all the bits (perhaps from the good high bits being rotated/shifted around etc)
 	u8 : Generator(U8)
-	u8 = bounded_u8(U8.lowest, U8.highest)
+	u8 = u32->map(U32.to_u8_wrap)
 
 	## Construct a `Generator` for 8-bit unsigned integers between two boundaries (inclusive)
 	bounded_u8 : U8, U8 -> Generator(U8)
-	bounded_u8 = |x, y| between_u8(x, y)
+	bounded_u8 = |x, y| {
+		x_u32 = x.to_u32()
+		y_u32 = y.to_u32()
+
+		bounded_u32(x_u32, y_u32)->map(U32.to_u8_wrap)
+	}
 
 	## Construct a `Generator` for 8-bit signed integers
 	i8 : Generator(I8)
-	i8 = {
-		(minimum, maximum) = (I8.lowest, I8.highest)
-		# TODO: Remove these `I64` dependencies.
-		range = maximum.to_i64() - minimum.to_i64() + 1
-		|state| {
-			# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-			offset = I64.rem_by(map_to_i32(permute(state)).to_i64() - I8.lowest.to_i64(), range)
-			value = (minimum.to_i64() + offset).to_i8_wrap()
-			{ value, state: update(state) }
-		}
-	}
+	i8 = u32->map(U32.to_i8_wrap)
 
 	## Construct a `Generator` for 8-bit signed integers between two boundaries (inclusive)
 	bounded_i8 : I8, I8 -> Generator(I8)
 	bounded_i8 = |x, y| {
-		(minimum, maximum) = sort(x, y)
-		# TODO: Remove these `I64` dependencies.
-		range = maximum.to_i64() - minimum.to_i64() + 1
-		|state| {
-			# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-			offset = I64.rem_by(map_to_i32(permute(state)).to_i64() - I8.lowest.to_i64(), range)
-			value = (minimum.to_i64() + offset).to_i8_wrap()
-			{ value, state: update(state) }
-		}
+		x_i32 = x.to_i32()
+		y_i32 = y.to_i32()
+
+		bounded_i32(x_i32, y_i32)->map(I32.to_i8_wrap)
 	}
 
 	## Construct a `Generator` for 16-bit unsigned integers
 	u16 : Generator(U16)
-	u16 = bounded_u16(U16.lowest, U16.highest)
+	u16 = u32->map(U32.to_u16_wrap)
 
 	## Construct a `Generator` for 16-bit unsigned integers between two boundaries (inclusive)
 	bounded_u16 : U16, U16 -> Generator(U16)
-	bounded_u16 = |x, y| between_u16(x, y)
+	bounded_u16 = |x, y| {
+		x_u32 = x.to_u32()
+		y_u32 = y.to_u32()
+
+		bounded_u32(x_u32, y_u32)->map(U32.to_u16_wrap)
+	}
 
 	## Construct a `Generator` for 16-bit signed integers
 	i16 : Generator(I16)
-	i16 = {
-		(minimum, maximum) = (I16.lowest, I16.highest)
-		# TODO: Remove these `I64` dependencies.
-		range = maximum.to_i64() - minimum.to_i64() + 1
-		|state| {
-			# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-			offset = I64.rem_by(map_to_i32(permute(state)).to_i64() - I16.lowest.to_i64(), range)
-			value = (minimum.to_i64() + offset).to_i16_wrap()
-			{ value, state: update(state) }
-		}
-	}
+	i16 = u32->map(U32.to_i16_wrap)
 
 	## Construct a `Generator` for 16-bit signed integers between two boundaries (inclusive)
 	bounded_i16 : I16, I16 -> Generator(I16)
 	bounded_i16 = |x, y| {
-		(minimum, maximum) = sort(x, y)
-		# TODO: Remove these `I64` dependencies.
-		range = maximum.to_i64() - minimum.to_i64() + 1
-		|state| {
-			# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-			offset = I64.rem_by(map_to_i32(permute(state)).to_i64() - I16.lowest.to_i64(), range)
-			value = (minimum.to_i64() + offset).to_i16_wrap()
-			{ value, state: update(state) }
-		}
+		x_i32 = x.to_i32()
+		y_i32 = y.to_i32()
+
+		bounded_i32(x_i32, y_i32)->map(I32.to_i16_wrap)
 	}
 
 	## Construct a `Generator` for 32-bit unsigned integers
 	u32 : Generator(U32)
-	u32 = between_u32(U32.lowest, U32.highest)
+	u32 = |s| {
+		value = permute(s)
+		state = update(s)
+
+		{ value, state }
+	}
 
 	## Construct a `Generator` for 32-bit unsigned integers between two boundaries (inclusive)
 	bounded_u32 : U32, U32 -> Generator(U32)
-	bounded_u32 = |x, y| between_u32(x, y)
+	bounded_u32 = |x, y| {
+		(minimum, maximum) = sort(x, y)
+
+		range = match (maximum - minimum).add_try(1) {
+			Ok(r) => r
+			# If absolute range doesn't fit in a U32 we need the full range generator
+			Err(Overflow) => return Random.u32
+		}
+
+		|state| {
+			offset = state->u32_exclusive_range_unbiased(range)
+
+			value = minimum + offset.value
+
+			{ value, state: offset.state }
+		}
+	}
 
 	## Construct a `Generator` for 32-bit signed integers
 	i32 : Generator(I32)
-	i32 = {
-		(minimum, maximum) = (I32.lowest, I32.highest)
-		# TODO: Remove these `I64` dependencies.
-		range = maximum.to_i64() - minimum.to_i64() + 1
-		|state| {
-			# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-			offset = I64.rem_by(map_to_i32(permute(state)).to_i64() - I32.lowest.to_i64(), range)
-			value = (minimum.to_i64() + offset).to_i32_wrap()
-			{ value, state: update(state) }
-		}
-	}
+	i32 = u32->map(U32.to_i32_wrap)
 
 	## Construct a `Generator` for 32-bit signed integers between two boundaries (inclusive)
 	bounded_i32 : I32, I32 -> Generator(I32)
 	bounded_i32 = |x, y| {
 		(minimum, maximum) = sort(x, y)
-		# TODO: Remove these `I64` dependencies.
-		range = maximum.to_i64() - minimum.to_i64() + 1
+		range = match (maximum - minimum).to_u32_wrap().add_try(1) {
+			Ok(r) => r
+			# If absolute range doesn't fit in a U32 we need the full range generator
+			Err(Overflow) => return Random.i32
+		}
+
 		|state| {
-			# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-			offset = I64.rem_by(map_to_i32(permute(state)).to_i64() - I32.lowest.to_i64(), range)
-			value = (minimum.to_i64() + offset).to_i32_wrap()
-			{ value, state: update(state) }
+			offset = state->u32_exclusive_range_unbiased(range)
+			min_u32 = minimum.to_u32_wrap()
+			value = min_u32->add_wrap_u32(offset.value).to_i32_wrap()
+
+			{ value, state: offset.state }
 		}
 	}
 }
 
 # Helpers for the above constructors -------------------------------------------
-between_u8 : U8, U8 -> Random.Generator(U8)
-between_u8 = |x, y| {
-	(minimum, maximum) = sort(x, y)
-	min16 = minimum.to_u16()
-	range = maximum.to_u16() - min16 + 1
 
-	|s| {
-		# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-		offset = permute(s).to_u8_wrap().to_u16() % range
-		value = (min16 + offset).to_u8_wrap()
-		state = update(s)
+## Generate a random U32 in the range `[0, range)` returning the new state of the backing PCG
+## See [www.pcg-random.org/posts/bounded-rands.html](https://www.pcg-random.org/posts/bounded-rands.html)
+## Adapted from "Lemire's Method", post by M.E. O'Neill
+## If a true random generator was backing this, technically there's a very very slim chance of this
+## while loop never terminating, but because the backing PCG in this implimentation is well
+## distributed in its values over time, it will quickly find a value that doesn't suffer from a bias
+## toward lower numbers in the range. The pathological case is when `range` is slightly larger than `2**31`
+## causing almost half of generated candidates to be rejected. In practice, with small `range` values,
+## there is an extremely miniscule chance of generating even a single value that needs to be rejected.
+##
+u32_exclusive_range_unbiased : State, U32 -> { value : U32, state : State }
+u32_exclusive_range_unbiased = |state, range| {
+	# `t` represents the exact number of outputs from the backing
+	# PCG that we must reject in order to remain unbiased for this
+	# particular range
+	t = (U64.pow(2, 32) % range.to_u64()).to_u32_wrap()
 
-		{ value, state }
+	var $state = state
+	while True {
+		x = permute($state)
+		$state = update($state)
+		m = x.to_u64() * range.to_u64()
+		l = m.to_u32_wrap()
+		if l >= t {
+			value = m.shift_right_by(32).to_u32_wrap()
+			return { value, state: $state }
+		}
 	}
-}
 
-between_u16 : U16, U16 -> Random.Generator(U16)
-between_u16 = |x, y| {
-	(minimum, maximum) = sort(x, y)
-	min32 = minimum.to_u32()
-	range = maximum.to_u32() - min32 + 1
-
-	|s| {
-		# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-		offset = permute(s).to_u16_wrap().to_u32() % range
-		value = (min32 + offset).to_u16_wrap()
-		state = update(s)
-
-		{ value, state }
-	}
-}
-
-between_u32 : U32, U32 -> Random.Generator(U32)
-between_u32 = |x, y| {
-	(minimum, maximum) = sort(x, y)
-	min64 = minimum.to_u64()
-	range = maximum.to_u64() - min64 + 1
-
-	|s| {
-		# TODO: Analyze this. The mod-ing might be biased towards a smaller offset!
-		offset = permute(s).to_u64() % range
-		value = (min64 + offset).to_u32_wrap()
-		state = update(s)
-
-		{ value, state }
-	}
-}
-
-map_to_i32 : U32 -> I32
-map_to_i32 = |x| {
-	middle = I32.highest.to_u32_wrap()
-	if x <= middle {
-		I32.lowest + x.to_i32_wrap()
-	} else {
-		(x - middle - 1).to_i32_wrap()
-	}
 }
 
 sort = |x, y|
@@ -410,11 +385,12 @@ expect {
 	color_component_gen = Random.bounded_i32(0, 255)
 	rgb_generator = { r: color_component_gen, g: color_component_gen, b: color_component_gen }.Random
 
-	next_seed = Random.seed(123)
-	rand_generation = Random.step(next_seed, rgb_generator)
-	rand_rgb = rand_generation.value
+	test_seed = Random.seed(123)
+	actual = rgb_generator(test_seed)
+	expected : { r : I32, g : I32, b : I32 }
+	expected = { r: 244, g: 173, b: 75 }
 
-	rand_rgb == { r: 65, g: 156, b: 137 }
+	actual.value == expected
 }
 
 expect {
@@ -431,7 +407,7 @@ expect {
 	test_seed = Random.seed(123)
 	actual = test_generator(test_seed)
 	expected : U16
-	expected = 182
+	expected = 239
 	actual.value == expected
 }
 
@@ -440,7 +416,7 @@ expect {
 	test_seed = Random.seed(123)
 	actual = test_generator(test_seed)
 	expected : U32
-	expected = 143
+	expected = 239
 	actual.value == expected
 }
 
@@ -449,7 +425,7 @@ expect {
 	test_seed = Random.seed(6)
 	actual = test_generator(test_seed)
 	expected : I8
-	expected = -8
+	expected = 3
 	actual.value == expected
 }
 
@@ -458,7 +434,7 @@ expect {
 	test_seed = Random.seed(6)
 	actual = test_generator(test_seed)
 	expected : I16
-	expected = -8
+	expected = 3
 	actual.value == expected
 }
 
