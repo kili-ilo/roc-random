@@ -237,7 +237,7 @@ Random := [].{
 	bounded_i32 : I32, I32 -> Generator(I32)
 	bounded_i32 = |x, y| {
 		(minimum, maximum) = sort(x, y)
-		range = match (maximum - minimum).to_u32_wrap().add_try(1) {
+		range = match I32.abs_diff(maximum, minimum).add_try(1) {
 			Ok(r) => r
 			# If absolute range doesn't fit in a U32 we need the full range generator
 			Err(Overflow) => return Random.i32
@@ -245,8 +245,8 @@ Random := [].{
 
 		|state| {
 			offset = state->u32_exclusive_range_unbiased(range)
-			min_u32 = minimum.to_u32_wrap()
-			value = min_u32->add_wrap_u32(offset.value).to_i32_wrap()
+			offset_i32 = offset.value.to_i32_wrap()
+			value = add_wrap_i32(minimum, offset_i32)
 
 			{ value, state: offset.state }
 		}
@@ -331,6 +331,9 @@ shift_right_zf_by_u32 = |value, shift|
 
 add_wrap_u32 : U32, U32 -> U32
 add_wrap_u32 = |a, b| (a.to_u64() + b.to_u64()).to_u32_wrap()
+
+add_wrap_i32 : I32, I32 -> I32
+add_wrap_i32 = |a, b| (a.to_i64() + b.to_i64()).to_i32_wrap()
 
 mul_wrap_u32 : U32, U32 -> U32
 mul_wrap_u32 = |a, b| (a.to_u64() * b.to_u64()).to_u32_wrap()
@@ -444,5 +447,43 @@ expect {
 	actual = test_generator(test_seed)
 	expected : I32
 	expected = 9
+	actual.value == expected
+}
+
+# Test large ranges to avoid overflow when calculating difference between min and max
+
+expect {
+	test_generator = Random.bounded_i32(I32.lowest, I32.highest - 1)
+	test_seed = Random.seed(6)
+	actual = test_generator(test_seed)
+	expected : I32
+	expected = -480661227
+	actual.value == expected
+}
+
+expect {
+	test_generator = Random.bounded_i32(I32.highest, I32.lowest)
+	test_seed = Random.seed(6)
+	actual = test_generator(test_seed)
+	expected : I32
+	expected = 1666822422
+	actual.value == expected
+}
+
+expect {
+	test_generator = Random.bounded_u32(U32.lowest, U32.highest - 1)
+	test_seed = Random.seed(6)
+	actual = test_generator(test_seed)
+	expected : U32
+	expected = 1666822421
+	actual.value == expected
+}
+
+expect {
+	test_generator = Random.bounded_u32(U32.highest, U32.lowest)
+	test_seed = Random.seed(6)
+	actual = test_generator(test_seed)
+	expected : U32
+	expected = 1666822422
 	actual.value == expected
 }
