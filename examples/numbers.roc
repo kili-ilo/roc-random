@@ -1,6 +1,6 @@
 app [main!] {
 	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.6.0/4mHqd7aiQ1hYkoso9C8JRfnx3GuwcwoDqv8EdqAsLbfN.tar.zst",
+	rand: "../package/main.roc",
 }
 
 import pf.Stdout
@@ -20,5 +20,5 @@ expect {
 	{ value: random_numbers, .. } = Random.step(Random.seed(1234), numbers_generator)
 
 	actual = random_numbers
-	actual == [52, 34, 26, 69, 34, 35, 51, 74, 70, 39]
+	actual == [66, 43, 43, 27, 65, 75, 58, 34, 61, 75]
 }

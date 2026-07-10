@@ -1,6 +1,6 @@
 app [main!] {
 	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.6.0/4mHqd7aiQ1hYkoso9C8JRfnx3GuwcwoDqv8EdqAsLbfN.tar.zst",
+	rand: "../package/main.roc",
 }
 
 import pf.Stdout
@@ -33,4 +33,4 @@ main! = |_args| {
 	Ok({})
 }
 
-expect encounter_from_seed(99) == { enemies: 4, treasure: 226, x: -3, y: 9 }
+expect encounter_from_seed(99) == { enemies: 2, treasure: 212, x: -8, y: -6 }

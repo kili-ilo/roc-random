@@ -1,6 +1,6 @@
 app [main!] {
 	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.6.0/4mHqd7aiQ1hYkoso9C8JRfnx3GuwcwoDqv8EdqAsLbfN.tar.zst",
+	rand: "../package/main.roc",
 }
 
 import pf.Stdout
@@ -32,4 +32,4 @@ main! = |_args| {
 	Ok({})
 }
 
-expect turn_from_seed(123) == { attack: 8, block: 0, critical_roll: 18 }
+expect turn_from_seed(123) == { attack: 12, block: 4, critical_roll: 6 }
