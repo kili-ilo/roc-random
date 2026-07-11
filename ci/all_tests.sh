@@ -42,6 +42,10 @@ echo "Running package tests..."
 "$ROC_BIN" test package/main.roc
 
 echo ""
+echo "Running Python oracle tests..."
+python3 ci/random_oracle_tests.py
+
+echo ""
 echo "Running example tests..."
 for roc_file in examples/*.roc; do
     "$ROC_BIN" test "$roc_file"

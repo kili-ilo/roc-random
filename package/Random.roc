@@ -450,6 +450,81 @@ expect {
 	actual.value == expected
 }
 
+expect {
+	u32_generator = Random.bounded_u32(42, 42)
+	i32_generator = Random.bounded_i32(-7, -7)
+
+	Iter.fold(
+		0..<100,
+		True,
+		|all_passed, seed_num| {
+			u32_actual = Random.step(Random.seed(seed_num), u32_generator).value
+			i32_actual = Random.step(Random.seed(seed_num), i32_generator).value
+
+			all_passed and u32_actual == 42 and i32_actual == -7
+		},
+	)
+}
+
+expect {
+	normal_order = Random.bounded_u32(25, 75)
+	reversed_order = Random.bounded_u32(75, 25)
+
+	Iter.fold(
+		0..<100,
+		True,
+		|all_passed, seed_num| {
+			state = Random.seed(seed_num)
+			normal = Random.step(state, normal_order)
+			reversed = Random.step(state, reversed_order)
+
+			all_passed and normal.value == reversed.value and normal.state == reversed.state
+		},
+	)
+}
+
+expect {
+	unsigned = Random.bounded_u32(25, 75)
+	signed = Random.bounded_i32(-10, 10)
+
+	Iter.fold(
+		0..<1_000,
+		True,
+		|all_passed, seed_num| {
+			u = Random.step(Random.seed(seed_num), unsigned).value
+			i = Random.step(Random.seed(seed_num), signed).value
+
+			all_passed and u >= 25 and u <= 75 and i >= -10 and i <= 10
+		},
+	)
+}
+
+expect {
+	range : U32
+	range = 2_147_483_649
+	initial_state = Random.seed(0)
+
+	threshold = (U64.pow(2, 32) % range.to_u64()).to_u32_wrap()
+	first_candidate = permute(initial_state)
+	first_low_bits = (first_candidate.to_u64() * range.to_u64()).to_u32_wrap()
+	state_after_first_rejection = update(initial_state)
+	second_candidate = permute(state_after_first_rejection)
+	second_low_bits = (second_candidate.to_u64() * range.to_u64()).to_u32_wrap()
+	state_after_second_rejection = update(state_after_first_rejection)
+	third_candidate = permute(state_after_second_rejection)
+	third_low_bits = (third_candidate.to_u64() * range.to_u64()).to_u32_wrap()
+	state_after_third_rejection = update(state_after_second_rejection)
+	accepted_candidate = permute(state_after_third_rejection)
+	accepted_product = accepted_candidate.to_u64() * range.to_u64()
+	accepted_low_bits = accepted_product.to_u32_wrap()
+	expected_value = accepted_product.shift_right_by(32).to_u32_wrap()
+	expected_state = update(state_after_third_rejection)
+
+	actual = u32_exclusive_range_unbiased(initial_state, range)
+
+	first_low_bits < threshold and second_low_bits < threshold and third_low_bits < threshold and accepted_low_bits >= threshold and actual.value == expected_value and actual.state == expected_state
+}
+
 # Test large ranges to avoid overflow when calculating difference between min and max
 
 expect {
