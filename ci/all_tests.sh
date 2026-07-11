@@ -34,6 +34,10 @@ echo "Checking package..."
 echo ""
 echo "Checking examples..."
 for roc_file in examples/*.roc; do
+    if ! grep -Eq '^[[:space:]]*rand:[[:space:]]*"\.\./package/main\.roc"' "$roc_file"; then
+        echo "$roc_file must use local rand dependency: ../package/main.roc" >&2
+        exit 1
+    fi
     "$ROC_BIN" check "$roc_file"
 done
 
