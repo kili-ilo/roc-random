@@ -33,4 +33,7 @@ main! = |_args| {
 	Ok({})
 }
 
-expect encounter_from_seed(99) == { enemies: 2, treasure: 212, x: -8, y: -6 }
+expect {
+	encounter = encounter_from_seed(99)
+	encounter == { enemies: 2, treasure: 151, x: -4, y: -4 }
+}

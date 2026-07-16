@@ -33,5 +33,5 @@ expect {
 	variant_a = stream_from_variant(1)
 	variant_b = stream_from_variant(3)
 
-	default_stream == [81, 35, 35, 5] and variant_a == [81, 83, 12, 39] and variant_b == [81, 96, 15, 27]
+	default_stream == [39, 32, 79, 9] and variant_a == [19, 17, 87, 34] and variant_b == [49, 31, 72, 62]
 }

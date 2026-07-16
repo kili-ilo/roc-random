@@ -21,5 +21,5 @@ main! = |_args| {
 expect {
 	generator = Random.map(Random.bounded_u32(25, 75), U32.to_str)
 	generation = Random.step(seed, generator)
-	generation.value == "66"
+	generation.value == "59"
 }

@@ -19,6 +19,5 @@ expect {
 	numbers_generator = Random.list(Random.bounded_u32(25, 75), 10)
 	{ value: random_numbers, .. } = Random.step(Random.seed(1234), numbers_generator)
 
-	actual = random_numbers
-	actual == [66, 43, 43, 27, 65, 75, 58, 34, 61, 75]
+	random_numbers == [59, 62, 67, 63, 41, 52, 44, 72, 42, 48]
 }

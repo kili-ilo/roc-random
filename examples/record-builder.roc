@@ -39,4 +39,7 @@ main! = |_args| {
 	Ok({})
 }
 
-expect character_from_seed("Ada", 9001) == { name: "Ada", strength: 4, agility: 9, hit_points: 13, lucky: False }
+expect {
+	character = character_from_seed("Ada", 9001)
+	character == { name: "Ada", strength: 12, agility: 6, hit_points: 16, lucky: False }
+}

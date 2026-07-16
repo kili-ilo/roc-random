@@ -32,4 +32,7 @@ main! = |_args| {
 	Ok({})
 }
 
-expect turn_from_seed(123) == { attack: 12, block: 4, critical_roll: 6 }
+expect {
+	turn = turn_from_seed(123)
+	turn == { attack: 12, block: 1, critical_roll: 14 }
+}

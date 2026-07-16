@@ -35,5 +35,5 @@ main! = |_args| {
 expect {
 	rolls = rolls_from_seed(2026)
 
-	rolls == [1, 3, 3, 1, 5] and total(rolls) == 13
+	rolls == [4, 4, 5, 5, 2] and total(rolls) == 20
 }

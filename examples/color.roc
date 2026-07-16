@@ -10,16 +10,21 @@ Color : { red : U8, green : U8, blue : U8, alpha : U8 }
 
 seed = Random.seed(12345)
 
-main! = |_args| {
-	color_generator : Random.Generator(Color)
-	color_generator = {
-		red: Random.u8,
-		green: Random.u8,
-		blue: Random.u8,
-		alpha: Random.u8,
-	}.Random
+color_generator : Random.Generator(Color)
+color_generator = {
+	red: Random.u8,
+	green: Random.u8,
+	blue: Random.u8,
+	alpha: Random.u8,
+}.Random
 
+main! = |_args| {
 	{ value: color, .. } = Random.step(seed, color_generator)
 	Stdout.line!("Color generated: ${Str.inspect(color)}")
 	Ok({})
+}
+
+expect {
+	{ value: color, .. } = Random.step(seed, color_generator)
+	color == { red: 136, green: 236, blue: 172, alpha: 78 }
 }
