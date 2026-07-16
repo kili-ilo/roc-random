@@ -304,11 +304,16 @@ pcg_rxs_m_xs = |state| {
 			.to_u8_wrap()
 	}
 
-	partial1 = state->xor_shift(rxs_shift_op + rxs_op_bitcount)
-	partial2 = partial1->mul_wrap_u32(default_u32_permute_multiplier)
+	first_xor_shift_amount = rxs_shift_op + rxs_op_bitcount
+
+	permute_multiplier = default_u32_permute_multiplier
 
 	final_xor_shift_amount = ((2 * output_bitcount) + 2) // 3
-	partial2->xor_shift(final_xor_shift_amount)
+
+	state
+		->xor_shift(first_xor_shift_amount)
+		->mul_wrap_u32(permute_multiplier)
+		->xor_shift(final_xor_shift_amount)
 }
 
 # See section 4.1 on page 20 in the PCG paper (see link above).
