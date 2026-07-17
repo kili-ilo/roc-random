@@ -1,6 +1,6 @@
 app [main!] {
 	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.6.0/4mHqd7aiQ1hYkoso9C8JRfnx3GuwcwoDqv8EdqAsLbfN.tar.zst",
+	rand: "../package/main.roc",
 }
 
 import pf.Stdout
@@ -35,5 +35,5 @@ main! = |_args| {
 expect {
 	rolls = rolls_from_seed(2026)
 
-	rolls == [1, 2, 5, 4, 1] and total(rolls) == 13
+	rolls == [4, 4, 5, 5, 2] and total(rolls) == 20
 }

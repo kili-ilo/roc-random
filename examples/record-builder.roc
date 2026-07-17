@@ -1,6 +1,6 @@
 app [main!] {
 	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.6.0/4mHqd7aiQ1hYkoso9C8JRfnx3GuwcwoDqv8EdqAsLbfN.tar.zst",
+	rand: "../package/main.roc",
 }
 
 import pf.Stdout
@@ -39,4 +39,7 @@ main! = |_args| {
 	Ok({})
 }
 
-expect character_from_seed("Ada", 9001) == { name: "Ada", strength: 3, agility: 3, hit_points: 13, lucky: False }
+expect {
+	character = character_from_seed("Ada", 9001)
+	character == { name: "Ada", strength: 12, agility: 6, hit_points: 16, lucky: False }
+}

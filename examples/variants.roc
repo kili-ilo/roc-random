@@ -1,6 +1,6 @@
 app [main!] {
 	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
-	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.6.0/4mHqd7aiQ1hYkoso9C8JRfnx3GuwcwoDqv8EdqAsLbfN.tar.zst",
+	rand: "../package/main.roc",
 }
 
 import pf.Stdout
@@ -33,5 +33,5 @@ expect {
 	variant_a = stream_from_variant(1)
 	variant_b = stream_from_variant(3)
 
-	default_stream == [79, 19, 84, 77] and variant_a == [79, 81, 4, 65] and variant_b == [79, 57, 37, 51]
+	default_stream == [39, 32, 79, 9] and variant_a == [19, 17, 87, 34] and variant_b == [49, 31, 72, 62]
 }
