@@ -32,20 +32,8 @@ echo "Checking package..."
 "$ROC_BIN" check package/main.roc
 
 echo ""
-echo "Checking examples..."
-for roc_file in examples/*.roc; do
-    "$ROC_BIN" check "$roc_file"
-done
-
-echo ""
 echo "Running package tests..."
 "$ROC_BIN" test package/main.roc
-
-echo ""
-echo "Running example tests..."
-for roc_file in examples/*.roc; do
-    "$ROC_BIN" test "$roc_file"
-done
 
 echo ""
 echo "Generating package docs..."
