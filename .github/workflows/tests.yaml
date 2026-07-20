@@ -1,5 +1,8 @@
 on:
   pull_request:
+  schedule:
+    # Run daily at 8 PM UTC, after the nightlies are typically published.
+    - cron: '0 20 * * *'
   workflow_dispatch:
 
 concurrency:
