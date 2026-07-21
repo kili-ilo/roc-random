@@ -62,14 +62,14 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
-      #- name: Check version bump
-      #  uses: roc-lang/release-package/actions/run-bump-check@bb018c8c96b439b9545db6c792adc0549cf01ee1
-      #  with:
-      #    release_version: ${{ steps.validate.outputs.release_version }}
-      #    dry_run: ${{ github.event_name != 'workflow_dispatch' }}
-      #    bump_check: require
-      #    bump_entrypoint: package/main.roc
-      #    previous_url: ${{ steps.previous.outputs.previous_url }}
+      - name: Check version bump
+        uses: roc-lang/release-package/actions/run-bump-check@bb018c8c96b439b9545db6c792adc0549cf01ee1
+        with:
+          release_version: ${{ steps.validate.outputs.release_version }}
+          dry_run: ${{ github.event_name != 'workflow_dispatch' }}
+          bump_check: require
+          bump_entrypoint: package/main.roc
+          previous_url: ${{ steps.previous.outputs.previous_url }}
 
       - name: Bundle package
         run: ./scripts/bundle.sh --output-dir dist
