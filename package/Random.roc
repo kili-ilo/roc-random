@@ -38,9 +38,7 @@ Random := [].{
 
 	## Internal state for Generators
 	State :: { s : U32, update_increment : U32 }.{
-		is_eq : State, State -> Bool
-		is_eq = |left, right|
-			left.s == right.s and left.update_increment == right.update_increment
+		is_eq : _
 	}
 
 	## Construct an initial "seed" `State` for `Generator`s
