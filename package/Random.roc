@@ -194,7 +194,7 @@ Random := [].{
 			if items.len() < 2 return { value: items, state: $state }
 
 			var $items = items
-			for i in List.from_iter(1..<items.len()).rev() {
+			for i in List.from_iter((1..<items.len()).iter()).rev() {
 				{ value: choice_i, state: $state } =
 					bounded_u64(0, i)($state)
 				$items = match $items.swap(i, choice_i) {
@@ -941,7 +941,7 @@ expect {
 
 # test shuffle
 expect {
-	items = (0..<100).collect()
+	items = List.from_iter((0..<100).iter())
 	expected_sum = items.sum()
 
 	test_passes_with_many_seeds(
@@ -998,6 +998,7 @@ pcg_c_known_answer_test_generator = |state| {
 		digits =
 			(0..<32)
 				.step_by(4)
+				.iter()
 				|> List.from_iter
 				.rev()
 				.map(
@@ -1090,7 +1091,7 @@ shuffle_with_u32 = |items| {
 		if items.len() < 2 return { value: items, state: $state }
 
 		var $items = items
-		for i in List.from_iter(1..<items.len()).rev() {
+		for i in List.from_iter((1..<items.len()).iter()).rev() {
 			{ value: choice_i, state: $state } =
 				Random.bounded_u32(0, i.to_u32_wrap())($state)
 			$items = match $items.swap(i, choice_i.to_u64()) {
@@ -1130,7 +1131,7 @@ test_round_generator = |var $state| {
 	{ value: rolls, state: $state } =
 		Random.list(Random.bounded_u32(1, 6), 33)($state)
 
-	random_deck = shuffle_with_u32((0..<52).collect())
+	random_deck = shuffle_with_u32(List.from_iter((0..<52).iter()))
 	{ value: cards, state: $state } =
 		random_deck($state)
 
