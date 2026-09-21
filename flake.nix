@@ -21,32 +21,32 @@
         let
           nightly = {
             x86_64-linux = {
-              archive = "roc_nightly-linux_x86_64-2026-09-18-1d982dc.tar.gz";
-              hash = "sha256-UD5uVzSVZ03f5X49tTkMQDr6N2SnuyuHxWfzkb7aXfU=";
-              directory = "roc_nightly-linux_x86_64-2026-09-18-1d982dc";
+              archive = "roc_nightly-linux_x86_64-2026-09-19-d025939.tar.gz";
+              hash = "sha256-yo2KodhzjyeyyPMD398DQ9ij9ny+PYS0AvaHxkIcJfI=";
+              directory = "roc_nightly-linux_x86_64-2026-09-19-d025939";
             };
             aarch64-linux = {
-              archive = "roc_nightly-linux_arm64-2026-09-18-1d982dc.tar.gz";
-              hash = "sha256-vQ810iEDHiifr6Ch8k054Y5lJMcNixq5JpSbY2v1EVE=";
-              directory = "roc_nightly-linux_arm64-2026-09-18-1d982dc";
+              archive = "roc_nightly-linux_arm64-2026-09-19-d025939.tar.gz";
+              hash = "sha256-d5HIgsN7q7Unh16XB0VY3KnqdABQaubNku6R3nUgMiM=";
+              directory = "roc_nightly-linux_arm64-2026-09-19-d025939";
             };
             x86_64-darwin = {
-              archive = "roc_nightly-macos_x86_64-2026-09-18-1d982dc.tar.gz";
-              hash = "sha256-ZHntzxXK4kwxJC8yR32//xf77oNpJ+D2Eo7rOZMoZJU=";
-              directory = "roc_nightly-macos_x86_64-2026-09-18-1d982dc";
+              archive = "roc_nightly-macos_x86_64-2026-09-19-d025939.tar.gz";
+              hash = "sha256-UIJcUibUx1O+UuAaPZTFt8k+LGGmTQ/43zTN4MHkhaY=";
+              directory = "roc_nightly-macos_x86_64-2026-09-19-d025939";
             };
             aarch64-darwin = {
-              archive = "roc_nightly-macos_apple_silicon-2026-09-18-1d982dc.tar.gz";
-              hash = "sha256-Pif1Agq474SLb6z17SE8RkeVaV9YnzNBJjgjlEz+TP8=";
-              directory = "roc_nightly-macos_apple_silicon-2026-09-18-1d982dc";
+              archive = "roc_nightly-macos_apple_silicon-2026-09-19-d025939.tar.gz";
+              hash = "sha256-NmuBgOedQ2fV3wsUYiTq/meP5EIPBUfUXrEfOL8mwNA=";
+              directory = "roc_nightly-macos_apple_silicon-2026-09-19-d025939";
             };
           }.${pkgs.stdenv.hostPlatform.system};
 
           roc-nightly = pkgs.stdenvNoCC.mkDerivation {
             pname = "roc-nightly";
-            version = "2026-09-18-1d982dc";
+            version = "2026-09-19-d025939";
             src = pkgs.fetchurl {
-              url = "https://github.com/roc-lang/nightlies/releases/download/nightly-2026-09-18-1d982dc/${nightly.archive}";
+              url = "https://github.com/roc-lang/nightlies/releases/download/nightly-2026-09-19-d025939/${nightly.archive}";
               inherit (nightly) hash;
             };
             dontBuild = true;
