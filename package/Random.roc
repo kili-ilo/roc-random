@@ -358,8 +358,8 @@ Random := [].{
 
 		input_is_valid = lo.is_finite()
 			and hi.is_finite()
-				and width.is_finite()
-					and width.is_positive()
+			and width.is_finite()
+			and width.is_positive()
 
 		expect input_is_valid
 
@@ -406,8 +406,8 @@ Random := [].{
 
 		input_is_valid = lo.is_finite()
 			and hi.is_finite()
-				and width.is_finite()
-					and width.is_positive()
+			and width.is_finite()
+			and width.is_positive()
 
 		expect input_is_valid
 
