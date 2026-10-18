@@ -195,7 +195,7 @@ Random := [].{
 		# items potentially preventing mutation optimization at the
 		# `shuffle` usage site?
 		|var $state| {
-			if items.len() < 2 return { value: items, state: $state }
+			if (items.len() < 2) return { value: items, state: $state }
 
 			var $items = items
 			for i in (1..<items.len()).iter_rev() {
@@ -358,15 +358,15 @@ Random := [].{
 
 		input_is_valid = lo.is_finite()
 			and hi.is_finite()
-				and width.is_finite()
-					and width.is_positive()
+			and width.is_finite()
+			and width.is_positive()
 
 		expect input_is_valid
 
 		Random.u32
 			|> map(
 				|rand| {
-					if !input_is_valid return lo
+					if (!input_is_valid) return lo
 
 					# these bits hold just the exponent for the range [1.0 .. 2.0)
 					exponent_bits = F32.to_bits(1.0)
@@ -406,15 +406,15 @@ Random := [].{
 
 		input_is_valid = lo.is_finite()
 			and hi.is_finite()
-				and width.is_finite()
-					and width.is_positive()
+			and width.is_finite()
+			and width.is_positive()
 
 		expect input_is_valid
 
 		Random.u64
 			|> map(
 				|rand| {
-					if !input_is_valid return lo
+					if (!input_is_valid) return lo
 
 					# these bits hold just the exponent for the range [1.0 .. 2.0)
 					exponent_bits = F64.to_bits(1.0)
@@ -511,7 +511,7 @@ Random := [].{
 
 					for (item, weight) in all_choices_iter {
 						$cumulative_sum = $cumulative_sum + weight
-						if rand < $cumulative_sum return item
+						if (rand < $cumulative_sum) return item
 					}
 
 					# we can only get here due to rounding error, just return last item
@@ -1095,7 +1095,7 @@ pcg_c_known_answer_test_generator = |state| {
 shuffle_with_u32 : List(a) -> Generator(List(a))
 shuffle_with_u32 = |items| {
 	|var $state| {
-		if items.len() < 2 return { value: items, state: $state }
+		if (items.len() < 2) return { value: items, state: $state }
 
 		var $items = items
 		for i in (1..<items.len()).iter_rev() {
