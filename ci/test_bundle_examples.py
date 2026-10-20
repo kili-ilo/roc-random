@@ -53,7 +53,8 @@ def bundle_package(bundle_dir: Path) -> Path:
     if match is None:
         raise SystemExit("Could not find bundle path in roc bundle output")
 
-    bundle_path = Path(match.group(1))
+    # Newer roc prints a path relative to its cwd, which bundle.sh sets to package/.
+    bundle_path = ROOT / "package" / match.group(1)
     if not bundle_path.exists():
         raise SystemExit(f"Bundle was not created: {bundle_path}")
 
