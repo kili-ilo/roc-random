@@ -1,10 +1,8 @@
 app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
 	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.9.3/HoULZB8QzktiNPYSe9myzy9JQzm1nMbjDPVWoA63QpVf.tar.zst",
 	roc: "nightly-2026-11-10-f7d1f19",
 }
 
-import pf.Stdout
 import rand.Random
 
 Turn : {
@@ -29,7 +27,7 @@ turn_from_seed = |seed_num| {
 main! = |_args| {
 	turn = turn_from_seed(123)
 
-	Stdout.line!("Turn: ${Str.inspect(turn)}")
+	echo!("Turn: ${Str.inspect(turn)}\n")
 	Ok({})
 }
 

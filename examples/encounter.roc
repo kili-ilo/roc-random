@@ -1,10 +1,8 @@
 app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
 	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.9.3/HoULZB8QzktiNPYSe9myzy9JQzm1nMbjDPVWoA63QpVf.tar.zst",
 	roc: "nightly-2026-11-10-f7d1f19",
 }
 
-import pf.Stdout
 import rand.Random
 
 Encounter : {
@@ -30,7 +28,7 @@ encounter_from_seed = |seed_num| {
 main! = |_args| {
 	encounter = encounter_from_seed(99)
 
-	Stdout.line!("Encounter: ${Str.inspect(encounter)}")
+	echo!("Encounter: ${Str.inspect(encounter)}\n")
 	Ok({})
 }
 

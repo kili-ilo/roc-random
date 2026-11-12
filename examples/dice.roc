@@ -1,10 +1,8 @@
 app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
 	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.9.3/HoULZB8QzktiNPYSe9myzy9JQzm1nMbjDPVWoA63QpVf.tar.zst",
 	roc: "nightly-2026-11-10-f7d1f19",
 }
 
-import pf.Stdout
 import rand.Random
 
 roll_count : U64
@@ -28,8 +26,8 @@ rolls_to_str = |rolls|
 main! = |_args| {
 	rolls = rolls_from_seed(2026)
 
-	Stdout.line!("Rolls: ${rolls_to_str(rolls)}")
-	Stdout.line!("Total: ${U32.to_str(total(rolls))}")
+	echo!("Rolls: ${rolls_to_str(rolls)}\n")
+	echo!("Total: ${U32.to_str(total(rolls))}\n")
 	Ok({})
 }
 
