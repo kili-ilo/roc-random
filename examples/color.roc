@@ -1,10 +1,8 @@
 app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
 	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.9.3/HoULZB8QzktiNPYSe9myzy9JQzm1nMbjDPVWoA63QpVf.tar.zst",
 	roc: "nightly-2026-11-10-f7d1f19",
 }
 
-import pf.Stdout
 import rand.Random
 
 Color : { red : U8, green : U8, blue : U8, alpha : U8 }
@@ -21,7 +19,7 @@ color_generator = {
 
 main! = |_args| {
 	{ value: color, .. } = Random.step(seed, color_generator)
-	Stdout.line!("Color generated: ${Str.inspect(color)}")
+	echo!("Color generated: ${Str.inspect(color)}\n")
 	Ok({})
 }
 

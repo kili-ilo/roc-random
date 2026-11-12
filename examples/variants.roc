@@ -1,10 +1,8 @@
 app [main!] {
-	pf: platform "https://github.com/lukewilliamboswell/roc-platform-template-zig/releases/download/0.9/8GdFEvQYS3TeAZxKvTzCLVdQiomweGtXcdZkXNDEeABq.tar.zst",
 	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.9.3/HoULZB8QzktiNPYSe9myzy9JQzm1nMbjDPVWoA63QpVf.tar.zst",
 	roc: "nightly-2026-11-10-f7d1f19",
 }
 
-import pf.Stdout
 import rand.Random
 
 stream_from_variant : U32 -> List(U32)
@@ -23,9 +21,9 @@ main! = |_args| {
 	variant_a = stream_from_variant(1)
 	variant_b = stream_from_variant(3)
 
-	Stdout.line!("Default: ${numbers_to_str(default_stream)}")
-	Stdout.line!("Variant A: ${numbers_to_str(variant_a)}")
-	Stdout.line!("Variant B: ${numbers_to_str(variant_b)}")
+	echo!("Default: ${numbers_to_str(default_stream)}\n")
+	echo!("Variant A: ${numbers_to_str(variant_a)}\n")
+	echo!("Variant B: ${numbers_to_str(variant_b)}\n")
 	Ok({})
 }
 
