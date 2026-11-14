@@ -1,6 +1,6 @@
 app [main!] {
 	rand: "https://github.com/kili-ilo/roc-random/releases/download/0.9.3/HoULZB8QzktiNPYSe9myzy9JQzm1nMbjDPVWoA63QpVf.tar.zst",
-	roc: "nightly-2026-11-13-03dce41",
+	roc: "nightly-2026-11-14-a87808d",
 }
 
 import rand.Random
