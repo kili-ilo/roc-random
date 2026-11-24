@@ -23,11 +23,8 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Install Roc
-        uses: roc-lang/setup-roc@f5a74bf90aa694b43ab4a7cbfdb19273bc6aa697
-        with:
-          version: nightly-new-compiler
-          nightly-tag: ${{ steps.roc.outputs.version }}
-
-      - run: roc version
+        env:
+          ROC_VERSION: ${{ steps.roc.outputs.version }}
+        run: ./ci/install_roc.sh "$ROC_VERSION"
 
       - run: ./ci/all_tests.sh

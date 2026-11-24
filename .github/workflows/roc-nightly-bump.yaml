@@ -1,15 +1,14 @@
 # Opens a PR that repins the repository to the newest Roc nightly.
 #
-# The rest of CI installs the nightly pinned in examples/simple.roc, so the only
-# way to exercise a newer compiler is to bump the pin. A PR opened with
-# GITHUB_TOKEN does not trigger `on: pull_request` runs, so this workflow runs
-# the tests itself and reports the result in the PR description.
+# The repository pins a Roc release, so this only runs when started by hand,
+# e.g. to try a nightly with a fix the release lacks. The rest of CI installs
+# the version pinned in examples/simple.roc, so the only way to exercise
+# another compiler is to bump the pin. A PR opened with GITHUB_TOKEN does not
+# trigger `on: pull_request` runs, so this workflow runs the tests itself and
+# reports the result in the PR description.
 name: Bump Roc nightly
 
 on:
-  schedule:
-    # Run daily at 11 AM UTC, after the nightlies are typically published.
-    #- cron: '0 11 * * *'
   workflow_dispatch:
     inputs:
       version:
@@ -69,10 +68,9 @@ jobs:
 
       - name: Install Roc
         if: steps.nightly.outputs.skip == ''
-        uses: roc-lang/setup-roc@f5a74bf90aa694b43ab4a7cbfdb19273bc6aa697
-        with:
-          version: nightly-new-compiler
-          nightly-tag: ${{ steps.nightly.outputs.version }}
+        env:
+          ROC_VERSION: ${{ steps.nightly.outputs.version }}
+        run: ./ci/install_roc.sh "$ROC_VERSION"
 
       - name: Commit bump
         id: bump
