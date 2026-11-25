@@ -68,9 +68,11 @@ jobs:
 
       - name: Install Roc
         if: steps.nightly.outputs.skip == ''
-        env:
-          ROC_VERSION: ${{ steps.nightly.outputs.version }}
-        run: ./ci/install_roc.sh "$ROC_VERSION"
+        uses: roc-lang/setup-roc@19c9da4f0158ca74c4ac27d8999c17b5c2739cbf
+        with:
+          version: nightly
+          nightly-tag: ${{ steps.nightly.outputs.version }}
+          cache: 'false'
 
       - name: Commit bump
         id: bump
