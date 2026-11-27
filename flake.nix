@@ -19,43 +19,42 @@
           ...
         }:
         let
-          nightly = {
-            x86_64-linux = {
-              archive = "roc_nightly-linux_x86_64-2026-11-21-09f4dc3.tar.gz";
-              hash = "sha256-26/e6aF+EMeKEDl5bYA1zMzoz8va1LEZ5Jd4zfnu8YU=";
-              directory = "roc_nightly-linux_x86_64-2026-11-21-09f4dc3";
-            };
-            aarch64-linux = {
-              archive = "roc_nightly-linux_arm64-2026-11-21-09f4dc3.tar.gz";
-              hash = "sha256-r4tozYPXkivbL8R2oodQSLNBdLsrjZCIBWBHU34Il1s=";
-              directory = "roc_nightly-linux_arm64-2026-11-21-09f4dc3";
-            };
-            x86_64-darwin = {
-              archive = "roc_nightly-macos_x86_64-2026-11-21-09f4dc3.tar.gz";
-              hash = "sha256-L4pGKoRrQ1CIdMG9ZUzwm+6EKkA86ldPBLJ1F5gT+i8=";
-              directory = "roc_nightly-macos_x86_64-2026-11-21-09f4dc3";
-            };
-            aarch64-darwin = {
-              archive = "roc_nightly-macos_apple_silicon-2026-11-21-09f4dc3.tar.gz";
-              hash = "sha256-qfwMibu8tEqTQdQOeVbCawz2l3LchBHlGc6eKOfZF8Y=";
-              directory = "roc_nightly-macos_apple_silicon-2026-11-21-09f4dc3";
-            };
-          }.${pkgs.stdenv.hostPlatform.system};
+          # Written by scripts/update_roc_version.py.
+          roc-version = "0.1.0-RC1";
+          roc-url = "https://github.com/roc-lang/roc/releases/download/0.1.0_RC1";
+          roc-archive =
+            {
+              x86_64-linux = {
+                name = "roc-linux_x86_64-0.1.0_RC1";
+                hash = "sha256-BDxCbqhdzb1CeVHq7SRvDBDBcdmI8lmHgiM6ba5DN50=";
+              };
+              aarch64-linux = {
+                name = "roc-linux_arm64-0.1.0_RC1";
+                hash = "sha256-s+Cp28ki84AnAqVaGGmtLC5PTck12KnRsmw2EmaN/0M=";
+              };
+              x86_64-darwin = {
+                name = "roc-macos_x86_64-0.1.0_RC1";
+                hash = "sha256-6ps4teRwjL5CySB36Bb1JBKZ2hqj9MRujLkzsaoq+Fg=";
+              };
+              aarch64-darwin = {
+                name = "roc-macos_apple_silicon-0.1.0_RC1";
+                hash = "sha256-6CKAQMcB4TAlTHJTmh0PGxUNeMAAWHR+2w7a5Rul28g=";
+              };
+            }
+            .${pkgs.stdenv.hostPlatform.system};
 
-          roc-nightly = pkgs.stdenvNoCC.mkDerivation {
-            pname = "roc-nightly";
-            version = "2026-11-21-09f4dc3";
+          roc = pkgs.stdenvNoCC.mkDerivation {
+            pname = "roc";
+            version = roc-version;
             src = pkgs.fetchurl {
-              url = "https://github.com/roc-lang/nightlies/releases/download/nightly-2026-11-21-09f4dc3/${nightly.archive}";
-              inherit (nightly) hash;
+              url = "${roc-url}/${roc-archive.name}.tar.gz";
+              inherit (roc-archive) hash;
             };
             dontBuild = true;
             unpackPhase = "tar -xzf $src";
             sourceRoot = ".";
             installPhase = ''
-              mkdir -p $out/bin $out/lib
-              install -m755 ${nightly.directory}/roc $out/bin/roc
-              cp -R ${nightly.directory}/lib/. $out/lib/
+              install -Dm755 ${roc-archive.name}/roc $out/bin/roc
             '';
           };
         in
@@ -63,7 +62,7 @@
           devShells.default = pkgs.mkShell {
             name = "roc-random";
             packages = [
-              roc-nightly
+              roc
               pkgs.actionlint
               pkgs.nixfmt-rfc-style
               pkgs.nodePackages.prettier

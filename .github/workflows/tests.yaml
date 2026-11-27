@@ -14,19 +14,13 @@ jobs:
 
       - name: Read pinned Roc version
         id: roc
-        run: |
-          version="$(sed -n 's/.*roc: "\([^"]*\)".*/\1/p' examples/simple.roc | head -n 1)"
-          if [ -z "$version" ]; then
-            echo "examples/simple.roc does not pin a roc version" >&2
-            exit 1
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
+        run: ./ci/pinned_roc_version.sh >> "$GITHUB_OUTPUT"
 
       - name: Install Roc
-        uses: roc-lang/setup-roc@f5a74bf90aa694b43ab4a7cbfdb19273bc6aa697
+        uses: roc-lang/setup-roc@19c9da4f0158ca74c4ac27d8999c17b5c2739cbf
         with:
-          version: nightly-new-compiler
-          nightly-tag: ${{ steps.roc.outputs.version }}
+          version: ${{ steps.roc.outputs.version }}
+          nightly-tag: ${{ steps.roc.outputs.nightly_tag }}
 
       - run: roc version
 

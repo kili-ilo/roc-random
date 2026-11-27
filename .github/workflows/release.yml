@@ -25,6 +25,7 @@ jobs:
       docs_version: ${{ steps.validate.outputs.docs_version }}
       test_matrix: ${{ steps.bundles.outputs.test_matrix }}
       roc_version: ${{ steps.roc.outputs.version }}
+      roc_nightly_tag: ${{ steps.roc.outputs.nightly_tag }}
 
     steps:
       - name: Checkout
@@ -34,19 +35,14 @@ jobs:
 
       - name: Read pinned Roc version
         id: roc
-        run: |
-          version="$(sed -n 's/.*roc: "\([^"]*\)".*/\1/p' examples/simple.roc | head -n 1)"
-          if [ -z "$version" ]; then
-            echo "examples/simple.roc does not pin a roc version" >&2
-            exit 1
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
+        run: ./ci/pinned_roc_version.sh >> "$GITHUB_OUTPUT"
 
       - name: Install Roc
-        uses: roc-lang/setup-roc@f5a74bf90aa694b43ab4a7cbfdb19273bc6aa697
+        uses: roc-lang/setup-roc@19c9da4f0158ca74c4ac27d8999c17b5c2739cbf
         with:
-          version: nightly-new-compiler
-          nightly-tag: ${{ steps.roc.outputs.version }}
+          version: ${{ steps.roc.outputs.version }}
+          nightly-tag: ${{ steps.roc.outputs.nightly_tag }}
+          cache: 'false'
 
       - name: Validate release request
         id: validate
@@ -174,10 +170,11 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Install Roc
-        uses: roc-lang/setup-roc@f5a74bf90aa694b43ab4a7cbfdb19273bc6aa697
+        uses: roc-lang/setup-roc@19c9da4f0158ca74c4ac27d8999c17b5c2739cbf
         with:
-          version: nightly-new-compiler
-          nightly-tag: ${{ needs.build.outputs.roc_version }}
+          version: ${{ needs.build.outputs.roc_version }}
+          nightly-tag: ${{ needs.build.outputs.roc_nightly_tag }}
+          cache: 'false'
 
       - name: Download release bundles
         uses: actions/download-artifact@v8
@@ -261,10 +258,11 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Install Roc
-        uses: roc-lang/setup-roc@f5a74bf90aa694b43ab4a7cbfdb19273bc6aa697
+        uses: roc-lang/setup-roc@19c9da4f0158ca74c4ac27d8999c17b5c2739cbf
         with:
-          version: nightly-new-compiler
-          nightly-tag: ${{ needs.build.outputs.roc_version }}
+          version: ${{ needs.build.outputs.roc_version }}
+          nightly-tag: ${{ needs.build.outputs.roc_nightly_tag }}
+          cache: 'false'
 
       - name: Download release docs
         uses: actions/download-artifact@v8
